@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>MyWikiCourse</h1>
+
+<h2>Courses</h2>
+{% for course in courses %}
+<p>{{course.title}} by {{course.author.name}}</p>
+{% endfor %}
+
+{% endblock %}

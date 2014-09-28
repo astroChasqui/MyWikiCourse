@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+<form method="post" name="login">
+  {{form.hidden_tag()}}
+
+  {{ form.email.label }}
+  {{ form.email }}
+  {% for message in form.email.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  <br>
+
+  {{ form.password.label }}
+  {{ form.password }}
+  {% for message in form.password.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  <br>
+
+  {{form.remember_me}} Remember Me  <br>
+
+  {{ form.submit }}
+</form>
+
+<br>
+
+<a href="{{ url_for('signup') }}">Sign up</a>
+
+{% endblock %}

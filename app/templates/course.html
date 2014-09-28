@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{ course.title }}</h1>
+
+{% for key, sect in sects.iteritems() %}
+  <h2> {{ key }} </h2>
+  {% for par in sects_text[key] %}
+    <p> {{ par }} </p>
+  {% endfor %}
+{% endfor %}
+
+{% endblock %}

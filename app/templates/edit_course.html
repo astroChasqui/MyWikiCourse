@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{ course.title }}</h1>
+
+<form method="post" name="edit_course">
+  {{form.hidden_tag()}}
+
+  {{ form.title.label }}
+  {{ form.title }}
+  {% for message in form.title.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  <br>
+
+  {{ form.submit }}
+</form>
+
+{% endblock %}

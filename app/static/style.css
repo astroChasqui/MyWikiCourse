@@ -1,5 +1,6 @@
 body {
   font-family: Ubuntu, sans-serif;
+  xfont-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.8em;
 }
 h1 {
@@ -22,4 +23,7 @@ label {
 }
 input[type=text],input[type=password] {
   width: 160px;
+}
+label.new_section {
+  width: 150px;
 }

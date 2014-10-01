@@ -3,7 +3,8 @@ from flask import render_template, flash, redirect, g, session, request,\
 from flask.ext.login import login_required, current_user, login_user,\
                             logout_user
 from app import app, lm, db
-from forms import LoginForm, SignupForm, CreateCourseForm, EditCourseForm
+from forms import LoginForm, SignupForm, CreateCourseForm,\
+                  CourseTitleForm, NewSectionForm
 from models import User, Course
 import datetime
 
@@ -125,22 +126,26 @@ def create_course():
 def edit_course(id):
     user = g.user
     course = Course.query.filter_by(id = id).first()
-    form = EditCourseForm()
+    course_title_form = CourseTitleForm()
+    new_section_form = NewSectionForm()
     if request.method == 'POST':
-        if form.validate() == False:
+        if course_title_form.validate_on_submit() == False:
             return render_template('edit_course.html',
                                    title = 'Edit course',
-                                   user = user, form = form, course = course)
+                                   user = user, course = course,
+                                   course_title_form = course_title_form,
+                                   new_section_form = new_section_form)
         else:
-            #newcourse = Course(form.title.data, user.get_id())
-            #db.session.add(newcourse)
-            #db.session.commit()
+            course.title = course_title_form.title.data
+            db.session.commit()
             flash("Course edited.")
-            return redirect(url_for('profile'))
+            return redirect(url_for('edit_course', id = id))
     elif request.method == 'GET':
         return render_template('edit_course.html',
                                title = 'Edit course',
-                               user = user, form = form, course = course)
+                               user = user, course = course,
+                               course_title_form = course_title_form,
+                               new_section_form = new_section_form)
 
 
 from collections import OrderedDict

@@ -58,7 +58,37 @@ class CreateCourseForm(Form):
 
 class EditCourseForm(Form):
     title = TextField("Title", validators = [Required()])
+    new_section_title = TextField("Title", validators = [Required()])
+    new_section_wiki_title = TextField("Title in Wikipedia",
+                                       validators = [Required()])
+    new_section_wiki_section = TextField("Section title in Wikipedia",
+                                         validators = [Required()])
     submit = SubmitField("Update")
+ 
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+   
+    def validate(self):
+        if not Form.validate(self):
+            return False
+
+class CourseTitleForm(Form):
+    title = TextField("Title", validators = [Required()])
+    submit = SubmitField("Update")
+ 
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+   
+    def validate(self):
+        if not Form.validate(self):
+            return False
+
+class NewSectionForm(Form):
+    title = TextField("Title", validators = [Required()])
+    wiki_title = TextField("Title in Wikipedia", validators = [Required()])
+    wiki_section = TextField("Section title in Wikipedia",
+                             validators = [Required()])
+    submit = SubmitField("Add new section")
  
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)

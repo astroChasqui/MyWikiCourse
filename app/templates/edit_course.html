@@ -3,18 +3,51 @@
 
 <h1>{{ course.title }}</h1>
 
-<form method="post" name="edit_course">
-  {{form.hidden_tag()}}
+<form method="post" name="course_title">
+  {{ course_title_form.hidden_tag() }}
 
-  {{ form.title.label }}
-  {{ form.title }}
-  {% for message in form.title.errors %}
+  {{ course_title_form.title.label }}
+  {{ course_title_form.title(value = course.title) }}
+  {% for message in course_title_form.title.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  
+  {{ course_title_form.submit }}
+
+</form>
+
+<p>New section</p>
+
+<form method="post" name="new_section">
+
+  {{ new_section_form.title.label(class="new_section") }}
+  {{ new_section_form.title(class="new_section") }}
+  {% for message in new_section_form.title.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
 
   <br>
 
-  {{ form.submit }}
+  {{ new_section_form.wiki_title.label(class="new_section") }}
+  {{ new_section_form.wiki_title() }}
+  {% for message in new_section_form.wiki_title.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  <br>
+
+  {{ new_section_form.wiki_section.label(class="new_section") }}
+  {{ new_section_form.wiki_section() }}
+  {% for message in new_section_form.wiki_section.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  <br>
+
+  {{ new_section_form.submit }}
+
+  <br>
+
 </form>
 
 {% endblock %}

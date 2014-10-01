@@ -8,10 +8,10 @@
 <p>Courses:</p>
 
 <table>
-  <tr><td>ID</td><td>Title</td></tr>
+  <tr><td>ID (click to edit)</td><td>Title</td></tr>
   {% for course in courses %}
     <tr>
-      <td>{{ course.id }}</td>
+      <td><a href={{ url_for('edit_course', id=course.id) }}>{{ course.id }}</td>
       <td>{{ course.title }}</td>
     </tr>
   {% endfor %}

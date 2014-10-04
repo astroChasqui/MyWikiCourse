@@ -4,6 +4,7 @@
 <h1>{{ course.title }}</h1>
 
 <form method="post" name="course_title">
+
   {{ course_title_form.hidden_tag() }}
 
   {{ course_title_form.title.label }}
@@ -12,6 +13,8 @@
     <div class="flash">{{ message }}</div>
   {% endfor %}
   
+  <br>
+  
   {{ course_title_form.submit }}
 
 </form>
@@ -19,6 +22,8 @@
 <p>New section</p>
 
 <form method="post" name="new_section">
+
+  {{ new_section_form.hidden_tag() }}
 
   {{ new_section_form.title.label(class="new_section") }}
   {{ new_section_form.title(class="new_section") }}
@@ -39,6 +44,14 @@
   {{ new_section_form.wiki_section.label(class="new_section") }}
   {{ new_section_form.wiki_section() }}
   {% for message in new_section_form.wiki_section.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  <br>
+
+  {{ new_section_form.position.label(class="new_section") }}
+  {{ new_section_form.position() }}
+  {% for message in new_section_form.position.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
 

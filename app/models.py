@@ -58,3 +58,22 @@ class Course(db.Model):
 
     def __repr__(self):
         return '<Course %r>' % (self.title)
+
+class Section(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String(64))
+    wiki_title = db.Column(db.String(64))
+    wiki_section = db.Column(db.String(64))
+    position = db.Column(db.String(64))
+    #e.g.: position="3.5.2" --> lesson 3, section 5, subsection 2
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+
+    def __init__(self, title, wiki_title, wiki_section, position, course_id):
+        self.title = title
+        self.wiki_title = wiki_title
+        self.wiki_section = wiki_section.title
+        self.position = position
+        self.course_id = course_id
+
+    def __repr__(self):
+        return '<Section %r>' % (self.title)

@@ -5,7 +5,7 @@ from flask.ext.login import login_required, current_user, login_user,\
 from app import app, lm, db
 from forms import LoginForm, SignupForm, CreateCourseForm,\
                   CourseTitleForm, NewSectionForm
-from models import User, Course
+from models import User, Course, Section
 import datetime
 
 
@@ -124,26 +124,37 @@ def create_course():
 @app.route('/edit_course/<id>', methods=['GET', 'POST'])
 @login_required
 def edit_course(id):
-    user = g.user
     course = Course.query.filter_by(id = id).first()
-    course_title_form = CourseTitleForm()
-    new_section_form = NewSectionForm()
+    course_title_form = CourseTitleForm(prefix="course-title")
+    new_section_form = NewSectionForm(prefix="new-section")
     if request.method == 'POST':
-        if course_title_form.validate_on_submit() == False:
-            return render_template('edit_course.html',
-                                   title = 'Edit course',
-                                   user = user, course = course,
-                                   course_title_form = course_title_form,
-                                   new_section_form = new_section_form)
-        else:
+        if course_title_form.submit.data and \
+           course_title_form.validate() == None:
             course.title = course_title_form.title.data
             db.session.commit()
             flash("Course edited.")
             return redirect(url_for('edit_course', id = id))
+        elif new_section_form.submit.data and \
+             new_section_form.validate() == None:
+            flash("Do something for new section")
+            newsection = Section(new_section_form.title.data,
+                                 new_section_form.wiki_title.data,
+                                 new_section_form.wiki_section.data,
+                                 new_section_form.position.data,
+                                 id)
+            db.session.add(newsection)
+            db.session.commit()
+            return redirect(url_for('edit_course', id = id))
+        else:
+            return render_template('edit_course.html',
+                                   title = 'Edit course',
+                                   course = course,
+                                   course_title_form = course_title_form,
+                                   new_section_form = new_section_form)
     elif request.method == 'GET':
         return render_template('edit_course.html',
                                title = 'Edit course',
-                               user = user, course = course,
+                               course = course,
                                course_title_form = course_title_form,
                                new_section_form = new_section_form)
 

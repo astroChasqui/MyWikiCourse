@@ -86,8 +86,8 @@ class CourseTitleForm(Form):
 class NewSectionForm(Form):
     title = TextField("Title", validators = [Required()])
     wiki_title = TextField("Title in Wikipedia", validators = [Required()])
-    wiki_section = TextField("Section title in Wikipedia",
-                             validators = [Required()])
+    wiki_section = TextField("Section title in Wikipedia")
+    position = TextField("Position", validators = [Required()])
     submit = SubmitField("Add new section")
  
     def __init__(self, *args, **kwargs):

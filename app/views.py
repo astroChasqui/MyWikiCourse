@@ -13,16 +13,7 @@ import datetime
 @app.route('/index')
 def index():
     user = g.user
-    courses = [
-               {
-                "author": {"name": "Ivan Ramirez"},
-                "title": "Solar System"
-               },
-               {
-                "author": {"name": "Someone Else"},
-                "title": "Stellar Astronomy"
-               }
-              ]
+    courses = Course.query.all()
     return render_template('index.html',
                            title = 'Home',
                            user = user,
@@ -127,6 +118,7 @@ def edit_course(id):
     course = Course.query.filter_by(id = id).first()
     course_title_form = CourseTitleForm(prefix="course-title")
     new_section_form = NewSectionForm(prefix="new-section")
+    sections = Section.query.filter_by(course_id = id)
     if request.method == 'POST':
         if course_title_form.submit.data and \
            course_title_form.validate() == None:
@@ -148,13 +140,13 @@ def edit_course(id):
         else:
             return render_template('edit_course.html',
                                    title = 'Edit course',
-                                   course = course,
+                                   course = course, sections = sections,
                                    course_title_form = course_title_form,
                                    new_section_form = new_section_form)
     elif request.method == 'GET':
         return render_template('edit_course.html',
                                title = 'Edit course',
-                               course = course,
+                               course = course, sections=sections,
                                course_title_form = course_title_form,
                                new_section_form = new_section_form)
 
@@ -165,14 +157,11 @@ import wikipedia
 @app.route('/<id>')
 def course(id):
     course = Course.query.filter_by(id = id).first()
+    sections = Section.query.filter_by(course_id = id)
 
     sects = OrderedDict()
-    sects["Meh! Mercury"] = ["Mercury_(planet)", "Naked-eye viewing"]
-    sects["*Venus"] = ["Venus", ""]
-    sects["Earth: out planet"] = ["Earth", ""]
-    sects["Mars"] = ["Mars", ""]
-    sects["Gas giant Jupiter"] = ["Jupiter", "Atmosphere"]
-    sects["Pluto: no longer a planet!"] = ["Pluto", "Classification"]
+    for section in sections:
+        sects[section.title] = [section.wiki_title, section.wiki_section]
 
     sects_text = {}
     for sect in sects.keys():

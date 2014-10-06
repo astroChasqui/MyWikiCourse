@@ -19,7 +19,26 @@
 
 </form>
 
-<p>New section</p>
+<p>Sections:</p>
+
+<table>
+  <tr>
+    <th>Position</th>
+    <th>Title</th>
+    <th>Wikipedia title</th>
+    <th>Wikipedia section</th>
+  </tr>
+  {% for section in sections %}
+    <tr>
+      <td>{{ section.position }}</td>
+      <td>{{ section.title }}</td>
+      <td>{{ section.wiki_title }}</td>
+      <td>{{ section.wiki_section }}</td>
+    <tr>
+  {% endfor %}
+</table>
+
+<p>Add new section:</p>
 
 <form method="post" name="new_section">
 
@@ -49,11 +68,17 @@
 
   <br>
 
-  {{ new_section_form.position.label(class="new_section") }}
-  {{ new_section_form.position() }}
-  {% for message in new_section_form.position.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
+  {{ new_section_form.chapter.label(class="new_section_position") }}
+  {{ new_section_form.chapter() }}
+
+  {{ new_section_form.section.label(class="new_section_position") }}
+  {{ new_section_form.section() }}
+
+  {{ new_section_form.subsection.label(class="new_section_position") }}
+  {{ new_section_form.subsection() }}
+
+  {{ new_section_form.subsubsection.label(class="new_section_position") }}
+  {{ new_section_form.subsubsection() }}
 
   <br>
 

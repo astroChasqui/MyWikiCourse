@@ -27,3 +27,6 @@ input[type=text],input[type=password] {
 label.new_section {
   width: 150px;
 }
+label.new_section_position {
+  width: 80px;
+}

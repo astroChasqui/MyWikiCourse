@@ -1,5 +1,6 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, BooleanField, PasswordField, SubmitField
+from wtforms import TextField, BooleanField, PasswordField, SubmitField, \
+                    SelectField
 from wtforms.validators import Required, Email
 from models import User
 
@@ -84,10 +85,15 @@ class CourseTitleForm(Form):
             return False
 
 class NewSectionForm(Form):
-    title = TextField("Title", validators = [Required()])
+    title = TextField("Title")
     wiki_title = TextField("Title in Wikipedia", validators = [Required()])
     wiki_section = TextField("Section title in Wikipedia")
-    position = TextField("Position", validators = [Required()])
+    chapter = SelectField("Chapter", choices=[('uno', '1'), ('dos', '2')])
+    section = SelectField("Section", choices=[('uno', '1'), ('dos', '2')])
+    subsection = SelectField("Subsection",
+                              choices=[('uno', '1'), ('dos', '2')])
+    subsubsection = SelectField("Subsubsection",
+                              choices=[('uno', '1'), ('dos', '2')])
     submit = SubmitField("Add new section")
  
     def __init__(self, *args, **kwargs):

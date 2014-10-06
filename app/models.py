@@ -64,15 +64,21 @@ class Section(db.Model):
     title = db.Column(db.String(64))
     wiki_title = db.Column(db.String(64))
     wiki_section = db.Column(db.String(64))
-    position = db.Column(db.String(64))
-    #e.g.: position="3.5.2" --> lesson 3, section 5, subsection 2
+    chapter = db.Column(db.Integer)
+    section = db.Column(db.Integer)
+    subsection = db.Column(db.Integer)
+    subsubsection = db.Column(db.Integer)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
 
-    def __init__(self, title, wiki_title, wiki_section, position, course_id):
+    def __init__(self, title, wiki_title, wiki_section,
+                 chapter, section, subsection, subsubsection, course_id):
         self.title = title
         self.wiki_title = wiki_title
-        self.wiki_section = wiki_section.title
-        self.position = position
+        self.wiki_section = wiki_section
+        self.chapter = chapter
+        self.section = section
+        self.subsection = subsection
+        self.subsubsection = subsubsection
         self.course_id = course_id
 
     def __repr__(self):

@@ -30,3 +30,7 @@ label.new_section {
 label.new_section_position {
   width: 80px;
 }
+
+.error {
+  font-style: italic;
+}

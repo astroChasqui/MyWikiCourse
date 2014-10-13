@@ -10,7 +10,7 @@
   {{ form.firstname.label }}
   {{ form.firstname }}
   {% for message in form.firstname.errors %}
-    <div class="flash">{{ message }}</div>
+    <div class="error">{{ message }}</div>
   {% endfor %}
 
   <br>
@@ -18,7 +18,7 @@
   {{ form.lastname.label }}
   {{ form.lastname }}
   {% for message in form.lastname.errors %}
-    <div class="flash">{{ message }}</div>
+    <div class="error">{{ message }}</div>
   {% endfor %}
 
   <br>
@@ -26,7 +26,7 @@
   {{ form.email.label }}
   {{ form.email }}
   {% for message in form.email.errors %}
-    <div class="flash">{{ message }}</div>
+    <div class="error">{{ message }}</div>
   {% endfor %}
 
   <br>
@@ -34,7 +34,7 @@
   {{ form.password.label }}
   {{ form.password }}
   {% for message in form.password.errors %}
-    <div class="flash">{{ message }}</div>
+    <div class="error">{{ message }}</div>
   {% endfor %}
 
   <br>

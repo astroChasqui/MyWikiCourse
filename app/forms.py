@@ -7,7 +7,7 @@ from models import User
 class LoginForm(Form):
     email = TextField("Email", validators= [Required(), Email()])
     password = PasswordField("Password", validators = [Required()])
-    remember_me = BooleanField("remember_me", default = True)
+    remember_me = BooleanField("remember_me", default = False)
     submit = SubmitField("Log In")
 
     def __init__(self, *args, **kwargs):
@@ -88,12 +88,12 @@ class NewSectionForm(Form):
     title = TextField("Title")
     wiki_title = TextField("Title in Wikipedia", validators = [Required()])
     wiki_section = TextField("Section title in Wikipedia")
-    chapter = SelectField("Chapter", choices=[('uno', '1'), ('dos', '2')])
-    section = SelectField("Section", choices=[('uno', '1'), ('dos', '2')])
+    chapter = SelectField("Chapter", choices=[('1', '1'), ('2', '2')])
+    section = SelectField("Section", choices=[('1', ''), ('1', '1')])
     subsection = SelectField("Subsection",
-                              choices=[('uno', '1'), ('dos', '2')])
+                              choices=[('0', ''), ('1', '1')])
     subsubsection = SelectField("Subsubsection",
-                              choices=[('uno', '1'), ('dos', '2')])
+                              choices=[('0', ''), ('1', '1')])
     submit = SubmitField("Add new section")
  
     def __init__(self, *args, **kwargs):

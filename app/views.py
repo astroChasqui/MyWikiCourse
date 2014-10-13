@@ -132,7 +132,10 @@ def edit_course(id):
             newsection = Section(new_section_form.title.data,
                                  new_section_form.wiki_title.data,
                                  new_section_form.wiki_section.data,
-                                 new_section_form.position.data,
+                                 new_section_form.chapter.data,
+                                 new_section_form.section.data,
+                                 new_section_form.subsection.data,
+                                 new_section_form.subsubsection.data,
                                  id)
             db.session.add(newsection)
             db.session.commit()

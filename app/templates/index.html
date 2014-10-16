@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>MyWikiCourse</h1>
+<h2>MyWikiCourse</h2>
 
-<h2>Courses</h2>
+<h3>Courses</h3>
 {% for course in courses %}
   <p><a href={{ url_for('course', id=course.id) }}>{{ course.title }}</a></p>
 {% endfor %}

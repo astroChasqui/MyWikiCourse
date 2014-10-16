@@ -1,36 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>{{ course.title }}</h1>
+<h2>{{ course.title }}</h2>
 
-<form method="post" name="course_title">
+<p><a href={{ url_for('course', id=course.id) }}>View</a></p>
+
+<form method="post" name="course_title" role="form">
 
   {{ course_title_form.hidden_tag() }}
 
-  {{ course_title_form.title.label }}
-  {{ course_title_form.title(value = course.title) }}
-  {% for message in course_title_form.title.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
+  <div class="form-group">
+    {{ course_title_form.title.label }}
+    {{ course_title_form.title(value = course.title, class="form-control") }}
+    {% for message in course_title_form.title.errors %}
+      <div class="flash">{{ message }}</div>
+    {% endfor %}
+  </div>
   
-  <br>
-  
-  {{ course_title_form.submit }}
+  {{ course_title_form.submit(class="btn btn-default") }}
 
 </form>
 
-<p>Sections:</p>
+<br>
 
-<table>
+<h3>Contents</h3>
+
+<table class="table table-bordered">
   <tr>
-    <th>Position</th>
+    <th>Section</th>
     <th>Title</th>
     <th>Wikipedia title</th>
     <th>Wikipedia section</th>
   </tr>
   {% for section in sections %}
     <tr>
-      <td>{{ section.position }}</td>
+      <td>{{ section.chapter }}
+          .{{ section.section }}
+          .{{ section.subsection }}
+          .{{ section.subsubsection }}
+      </td>
       <td>{{ section.title }}</td>
       <td>{{ section.wiki_title }}</td>
       <td>{{ section.wiki_section }}</td>
@@ -38,53 +46,57 @@
   {% endfor %}
 </table>
 
-<p>Add new section:</p>
+<h3>New section</h3>
 
-<form method="post" name="new_section">
+<form method="post" name="new_section" role="form">
 
   {{ new_section_form.hidden_tag() }}
 
-  {{ new_section_form.title.label(class="new_section") }}
-  {{ new_section_form.title(class="new_section") }}
-  {% for message in new_section_form.title.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
+  <div class="form">
 
-  <br>
+    <div class="form-group">
+      {{ new_section_form.title.label }}
+      {{ new_section_form.title(class="form-control") }}
+      {% for message in new_section_form.title.errors %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+    </div>
 
-  {{ new_section_form.wiki_title.label(class="new_section") }}
-  {{ new_section_form.wiki_title() }}
-  {% for message in new_section_form.wiki_title.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
+    <div class="form-group">
+      {{ new_section_form.wiki_title.label }}
+      {{ new_section_form.wiki_title(class="form-control") }}
+      {% for message in new_section_form.wiki_title.errors %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+    </div>
 
-  <br>
+    <div class="form-group">
+      {{ new_section_form.wiki_section.label }}
+      {{ new_section_form.wiki_section(class="form-control") }}
+      {% for message in new_section_form.wiki_section.errors %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+    </div>
 
-  {{ new_section_form.wiki_section.label(class="new_section") }}
-  {{ new_section_form.wiki_section() }}
-  {% for message in new_section_form.wiki_section.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
+    <div class="form-inline">
 
-  <br>
+      {{ new_section_form.chapter.label }}
+      {{ new_section_form.chapter(class="form-control") }}
 
-  {{ new_section_form.chapter.label(class="new_section_position") }}
-  {{ new_section_form.chapter() }}
+      {{ new_section_form.section.label }}
+      {{ new_section_form.section(class="form-control") }}
 
-  {{ new_section_form.section.label(class="new_section_position") }}
-  {{ new_section_form.section() }}
+      {{ new_section_form.subsection.label }}
+      {{ new_section_form.subsection(class="form-control") }}
 
-  {{ new_section_form.subsection.label(class="new_section_position") }}
-  {{ new_section_form.subsection() }}
+      {{ new_section_form.subsubsection.label }}
+      {{ new_section_form.subsubsection(class="form-control") }}
 
-  {{ new_section_form.subsubsection.label(class="new_section_position") }}
-  {{ new_section_form.subsubsection() }}
+    </div>
 
-  <br>
+    {{ new_section_form.submit(class="btn btn-default") }}
 
-  {{ new_section_form.submit }}
-
-  <br>
+  </div>
 
 </form>
 

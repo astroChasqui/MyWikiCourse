@@ -89,7 +89,7 @@ class NewSectionForm(Form):
     wiki_title = TextField("Title in Wikipedia", validators = [Required()])
     wiki_section = TextField("Section title in Wikipedia")
     chapter = SelectField("Chapter", choices=[('1', '1'), ('2', '2')])
-    section = SelectField("Section", choices=[('1', ''), ('1', '1')])
+    section = SelectField("Section", choices=[('0', ''), ('1', '1')])
     subsection = SelectField("Subsection",
                               choices=[('0', ''), ('1', '1')])
     subsubsection = SelectField("Subsubsection",

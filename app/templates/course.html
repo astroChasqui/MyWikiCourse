@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>{{ course.title }}</h1>
+<h2>{{ course.title }}</h2>
 
 {% for key, sect in sects.iteritems() %}
-  <h2> {{ key }} </h2>
+  <h3> {{ key }} </h3>
   {% for par in sects_text[key] %}
     <p> {{ par }} </p>
   {% endfor %}

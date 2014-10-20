@@ -47,7 +47,7 @@ class User(db.Model):
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(64))
-    timestamp = db.Column(db.DateTime)
+    #timestamp = db.Column(db.DateTime)
     #created_on = db.Column(db.DateTime)
     #last_update = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -56,8 +56,24 @@ class Course(db.Model):
         self.title = title.title()
         self.user_id = user_id
 
+    def get_id(self):
+        return unicode(self.id)
+
     def __repr__(self):
         return '<Course %r>' % (self.title)
+
+class Chapter(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    #number = db.Column(db.Integer)
+    title = db.Column(db.String(64))
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
+
+    def __init__(self, title, course_id):
+        self.title = title.title()
+        self.course_id = course_id
+
+    def __repr__(self):
+        return '<Chapter %r>' % (self.title)
 
 class Section(db.Model):
     id = db.Column(db.Integer, primary_key = True)

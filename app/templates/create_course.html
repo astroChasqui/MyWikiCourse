@@ -2,21 +2,21 @@
 
 {% block content %}
 
-<h1>{{ title }}</h1>
-<form method="post" name="create_course">
+<h2>{{ title }}</h2>
+
+<form method="post" name="create_course" role="form">
   {{form.hidden_tag()}}
 
-  {{ form.title.label }}
-  {{ form.title }}
-  {% for message in form.title.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
+  <div class="form-group">
+    {{ form.title.label }}
+    {{ form.title(class="form-control") }}
+    {% for message in form.title.errors %}
+      <div class="text-danger">{{ message }}</div>
+    {% endfor %}
+  </div>
 
-  <br>
-
-  {{ form.submit }}
+  {{ form.submit(class="btn btn-default") }}
+  
 </form>
-
-<br>
 
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>{{ course.title }}</h2>
+
+{% for section in sections %}
+  {% if section.section == 0 %}
+    {{ section.chapter }}.- {{ section.title }} <br>
+  {% endif %}
+  {% if section.section >= 1 %}
+    - {{ section.title }}<br>
+  {% endif %}
+{% endfor %}
+
+{% endblock %}

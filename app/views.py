@@ -4,8 +4,8 @@ from flask.ext.login import login_required, current_user, login_user,\
                             logout_user
 from app import app, lm, db
 from forms import LoginForm, SignupForm, CreateCourseForm,\
-                  CourseTitleForm, NewSectionForm
-from models import User, Course, Section
+                  CourseTitleForm, NewChapterForm, NewSectionForm
+from models import User, Course, Chapter, Section
 import datetime
 
 
@@ -117,7 +117,9 @@ def create_course():
 def edit_course(id):
     course = Course.query.filter_by(id = id).first()
     course_title_form = CourseTitleForm(prefix="course-title")
+    new_chapter_form = NewChapterForm(prefix="new-chapter")
     new_section_form = NewSectionForm(prefix="new-section")
+    chapters = Chapter.query.filter_by(course_id = course.id).all()
     sections = Section.query.filter_by(course_id = id)
     if request.method == 'POST':
         if course_title_form.submit.data and \
@@ -125,6 +127,13 @@ def edit_course(id):
             course.title = course_title_form.title.data
             db.session.commit()
             flash("Course edited.")
+            return redirect(url_for('edit_course', id = id))
+        elif new_chapter_form.submit.data and \
+             new_chapter_form.validate() == None:
+            newchapter = Chapter(new_chapter_form.title.data, course.get_id())
+            db.session.add(newchapter)
+            db.session.commit()
+            flash("Chapter added.")
             return redirect(url_for('edit_course', id = id))
         elif new_section_form.submit.data and \
              new_section_form.validate() == None:
@@ -143,14 +152,18 @@ def edit_course(id):
         else:
             return render_template('edit_course.html',
                                    title = 'Edit course',
-                                   course = course, sections = sections,
+                                   course = course, chapters = chapters,
+                                   sections = sections,
                                    course_title_form = course_title_form,
+                                   new_chapter_form = new_chapter_form,
                                    new_section_form = new_section_form)
     elif request.method == 'GET':
         return render_template('edit_course.html',
                                title = 'Edit course',
-                               course = course, sections=sections,
+                               course = course, chapters = chapters,
+                               sections = sections,
                                course_title_form = course_title_form,
+                               new_chapter_form = new_chapter_form,
                                new_section_form = new_section_form)
 
 
@@ -160,18 +173,18 @@ import wikipedia
 @app.route('/<id>')
 def course(id):
     course = Course.query.filter_by(id = id).first()
-    sections = Section.query.filter_by(course_id = id)
+    sections = Section.query.filter_by(course_id = id).all()
 
-    sects = OrderedDict()
-    for section in sections:
-        sects[section.title] = [section.wiki_title, section.wiki_section]
+    #sects = OrderedDict()
+    #for section in sections:
+    #    sects[section.title] = [section.wiki_title, section.wiki_section]
 
-    sects_text = {}
-    for sect in sects.keys():
-        sects_text[sect] = getwikitext(sects[sect][0], sects[sect][1])
+    #sects_text = {}
+    #for sect in sects.keys():
+    #    sects_text[sect] = getwikitext(sects[sect][0], sects[sect][1])
 
-    return render_template("course.html",
-                           course = course, sects=sects, sects_text=sects_text
+    return render_template("course_toc.html",
+                           course = course, sections=sections
                           )
 
 def getwikitext(page, section):

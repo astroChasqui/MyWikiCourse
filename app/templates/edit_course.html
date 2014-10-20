@@ -5,7 +5,11 @@
 
 <p><a href={{ url_for('course', id=course.id) }}>View</a></p>
 
-<form method="post" name="course_title" role="form">
+
+<form method="post" name="course_title" role="form"
+      style="border:solid blue 2px;border-radius:4px;padding:5px;">
+
+  <h3>Course title</h3>
 
   {{ course_title_form.hidden_tag() }}
 
@@ -13,7 +17,7 @@
     {{ course_title_form.title.label }}
     {{ course_title_form.title(value = course.title, class="form-control") }}
     {% for message in course_title_form.title.errors %}
-      <div class="flash">{{ message }}</div>
+      <div class="text-danger">{{ message }}</div>
     {% endfor %}
   </div>
   
@@ -21,82 +25,111 @@
 
 </form>
 
-<br>
 
 <h3>Contents</h3>
 
-<table class="table table-bordered">
-  <tr>
-    <th>Section</th>
-    <th>Title</th>
-    <th>Wikipedia title</th>
-    <th>Wikipedia section</th>
-  </tr>
-  {% for section in sections %}
-    <tr>
-      <td>{{ section.chapter }}
-          .{{ section.section }}
-          .{{ section.subsection }}
-          .{{ section.subsubsection }}
-      </td>
-      <td>{{ section.title }}</td>
-      <td>{{ section.wiki_title }}</td>
-      <td>{{ section.wiki_section }}</td>
-    <tr>
-  {% endfor %}
-</table>
+{% if chapters %}
 
-<h3>New section</h3>
+    {% for chapter in chapters %}
+      {{ chapter.title }} <br>
+    {% endfor %}
 
-<form method="post" name="new_section" role="form">
+  <table class="table table-bordered">
+    <tr>
+      <th>Section</th>
+      <th>Title</th>
+      <th>Wikipedia title</th>
+      <th>Wikipedia section</th>
+    </tr>
+    {% for section in sections %}
+      <tr>
+        <td>{{ section.chapter }}
+            .{{ section.section }}
+            .{{ section.subsection }}
+            .{{ section.subsubsection }}
+        </td>
+        <td>{{ section.title }}</td>
+        <td>{{ section.wiki_title }}</td>
+        <td>{{ section.wiki_section }}</td>
+      <tr>
+    {% endfor %}
+  </table>
+
+{% else %}
+  <p>This course is currently empty.</p>
+{% endif %}
+
+
+<form method="post" name="new_chapter" role="form"
+      style="border:solid green 2px;border-radius:4px;padding:5px;">
+
+  <h3>New chapter</h3>
+
+  {{ new_chapter_form.hidden_tag() }}
+
+  <div class="form-group">
+    {{ new_chapter_form.title.label }}
+    {{ new_chapter_form.title(class="form-control") }}
+    {% for message in new_chapter_form.title.errors %}
+      <div class="text-danger">{{ message }}</div>
+    {% endfor %}
+  </div>
+  
+  {{ new_chapter_form.submit(class="btn btn-default") }}
+
+</form>
+
+
+<form method="post" name="new_section" role="form"
+      style="border:solid magenta 2px;border-radius:4px;padding:5px;">
+
+  <h3>New section</h3>
 
   {{ new_section_form.hidden_tag() }}
 
-  <div class="form">
+  <div class="form-group">
+    {{ new_section_form.title.label }}
+    {{ new_section_form.title(class="form-control") }}
+    {% for message in new_section_form.title.errors %}
+      <div class="text-danger">{{ message }}</div>
+    {% endfor %}
+  </div>
 
-    <div class="form-group">
-      {{ new_section_form.title.label }}
-      {{ new_section_form.title(class="form-control") }}
-      {% for message in new_section_form.title.errors %}
-        <div class="flash">{{ message }}</div>
-      {% endfor %}
-    </div>
+  <div class="form-group">
+    {{ new_section_form.wiki_title.label }}
+    {{ new_section_form.wiki_title(class="form-control") }}
+    {% for message in new_section_form.wiki_title.errors %}
+      <div class="text-danger">{{ message }}</div>
+    {% endfor %}
+  </div>
 
-    <div class="form-group">
-      {{ new_section_form.wiki_title.label }}
-      {{ new_section_form.wiki_title(class="form-control") }}
-      {% for message in new_section_form.wiki_title.errors %}
-        <div class="flash">{{ message }}</div>
-      {% endfor %}
-    </div>
+  <div class="form-group">
+    {{ new_section_form.wiki_section.label }}
+    {{ new_section_form.wiki_section(class="form-control") }}
+    {% for message in new_section_form.wiki_section.errors %}
+      <div class="text-danger">{{ message }}</div>
+    {% endfor %}
+  </div>
 
-    <div class="form-group">
-      {{ new_section_form.wiki_section.label }}
-      {{ new_section_form.wiki_section(class="form-control") }}
-      {% for message in new_section_form.wiki_section.errors %}
-        <div class="flash">{{ message }}</div>
-      {% endfor %}
-    </div>
+  <div class="form-inline">
 
-    <div class="form-inline">
+    {{ new_section_form.chapter.label }}
+    {{ new_section_form.chapter(class="form-control") }}
 
-      {{ new_section_form.chapter.label }}
-      {{ new_section_form.chapter(class="form-control") }}
+    {{ new_section_form.section.label }}
+    {{ new_section_form.section(class="form-control") }}
 
-      {{ new_section_form.section.label }}
-      {{ new_section_form.section(class="form-control") }}
+    {{ new_section_form.subsection.label }}
+    {{ new_section_form.subsection(class="form-control") }}
 
-      {{ new_section_form.subsection.label }}
-      {{ new_section_form.subsection(class="form-control") }}
-
-      {{ new_section_form.subsubsection.label }}
-      {{ new_section_form.subsubsection(class="form-control") }}
-
-    </div>
-
-    {{ new_section_form.submit(class="btn btn-default") }}
+    {{ new_section_form.subsubsection.label }}
+    {{ new_section_form.subsubsection(class="form-control") }}
 
   </div>
+
+  <br>
+
+  {{ new_section_form.submit(class="btn btn-default") }}
 
 </form>
 

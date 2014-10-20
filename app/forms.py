@@ -84,6 +84,17 @@ class CourseTitleForm(Form):
         if not Form.validate(self):
             return False
 
+class NewChapterForm(Form):
+    title = TextField("Title", validators = [Required()])
+    submit = SubmitField("Create")
+ 
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+   
+    def validate(self):
+        if not Form.validate(self):
+            return False
+
 class NewSectionForm(Form):
     title = TextField("Title")
     wiki_title = TextField("Title in Wikipedia", validators = [Required()])
